@@ -37,7 +37,7 @@ var wizards = [
   }
 ];
 
-var renderWizard = function (wizard) {
+var renderWizard = function (value) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizards[i].coatColor;
