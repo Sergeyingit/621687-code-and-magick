@@ -37,7 +37,7 @@ var wizards = [
   }
 ];
 
-var renderWizard = function (value) {
+var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizards[i].coatColor;
@@ -48,7 +48,7 @@ var renderWizard = function (value) {
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < wizards.length; i++) {
   fragment.appendChild(renderWizard(wizards[i]));
-}
+};
 
 similarListElement.appendChild(fragment);
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
