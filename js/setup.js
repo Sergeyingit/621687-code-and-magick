@@ -15,7 +15,6 @@ var randomInt = function (min, max) {
 };
 
 var getRandomItem = function (arr) {
-  
   return arr[randomInt(0, arr.length)];
 };
 
