@@ -38,10 +38,10 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var wizards = getWizards();
+var allWizards = getWizards();
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
+for (var i = 0; i < allWizards.length; i++) {
+  fragment.appendChild(renderWizard(allWizards[i]));
 }
 
 similarListElement.appendChild(fragment);
