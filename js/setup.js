@@ -11,14 +11,12 @@ var wizardsCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161
 var wizardsEyes = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var randomInt = function (min, max) {
-  var rand = min + Math.random() * (max + 1 - min);
-  rand = Math.floor(rand);
-  return rand;
+  return Math.floor(min + Math.random() * (max - min));
 };
 
-var getRandomItem = function (x) {
-  x = x[randomInt(0, 7)];
-  return x;
+var getRandomItem = function (arr) {
+  
+  return arr[randomInt(0, arr.length)];
 };
 
 var getWizards = function () {
@@ -41,9 +39,10 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
+var wizards = getWizards();
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < getWizards().length; i++) {
-  fragment.appendChild(renderWizard(getWizards()[i]));
+for (var i = 0; i < wizards.length; i++) {
+  fragment.appendChild(renderWizard(wizards[i]));
 }
 
 similarListElement.appendChild(fragment);
