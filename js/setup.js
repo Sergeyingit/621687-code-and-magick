@@ -23,15 +23,15 @@ var getRandomItem = function (x) {
 
 var getWizards = function () {
   var wizards = [];
-  for (var i = 0; i < 4; i++ ) {
+  for (var i = 0; i < 4; i++) {
     wizards.push({
       name: getRandomItem(wizardsName) + ' ' + getRandomItem(wizardsLastName),
       coatColor: getRandomItem(wizardsCoat),
       eyesColor: getRandomItem(wizardsEyes)
-      });
-    }
+    });
+  }
   return wizards;
-  };
+};
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
