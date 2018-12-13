@@ -56,13 +56,13 @@ var setupClose = userDialog.querySelector('.setup-close');
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
 // функция обработки события закрытия по esc
-var popupEscPressHandler = function(evt) {
+var popupEscPressHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     userDialog.classList.add('hidden');
   }
 };
 // функция обработки события закрытия по enter
-var popupEnterPressHandler = function(evt) {
+var popupEnterPressHandler = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
     userDialog.classList.add('hidden');
   }
@@ -72,7 +72,7 @@ var popupEnterPressHandler = function(evt) {
 var openPopup = function () {
   userDialog.classList.remove('hidden');
   document.addEventListener('keydown', popupEscPressHandler); // при открытом окне слушаю закрытие по клавишам
-  setupClose.addEventListener('keydown',popupEnterPressHandler);
+  setupClose.addEventListener('keydown', popupEnterPressHandler);
 };
 
 var closePopup = function () {
@@ -134,15 +134,3 @@ fireballPlayer.addEventListener('click', function () {
   fireballPlayer.style.background = RandColor;
   fireballPlayerInp.value = RandColor;
 });
-/*
-
-по поводу не срабатывания esc при фокусе поля ввода.
-есть какое-то свойство в evt которое проверяет фокус ? я что-то гуглил, но особо не нагуглил.
-нашёл вариант проверить не равняется ли поле ввода Document.activeElement.
-но неужели нет свойства в evt?
-
-
-
-
-ещё я не понял демку раздел где добавляется "Полей с цветом плаща, глаз и фаерболла у нас нет, поэтому для них мы заведём скрытые (hidden) поля, которые будут отправляться вместе с формой, но видны пользователю не будут."
-19 слайд в демке. у меня это и так есть в разметке и что это вообще, не соображу.*/
