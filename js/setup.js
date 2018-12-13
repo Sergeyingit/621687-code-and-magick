@@ -9,7 +9,6 @@ var wizardsName = ['Иван', 'Хуан Себастьян', 'Мария', 'К�
 var wizardsLastName = ['да  Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var wizardsCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var wizardsEyes = ['black', 'red', 'blue', 'yellow', 'green'];
-var isFocused  = false;
 var randomInt = function (min, max) {
   return Math.floor(min + Math.random() * (max - min));
 };
@@ -58,13 +57,13 @@ var ENTER_KEYCODE = 13;
 // функция обработки события закрытия по esc
 var popupEscPressHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
-    userDialog.classList.add('hidden');
+    closePopup();
   }
 };
 // функция обработки события закрытия по enter
 var popupEnterPressHandler = function (evt) {
   if (evt.keyCode === ENTER_KEYCODE) {
-    userDialog.classList.add('hidden');
+    closePopup();
   }
 };
 
