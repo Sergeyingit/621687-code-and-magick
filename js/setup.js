@@ -54,6 +54,14 @@ var setupOpen = document.querySelector('.setup-open');
 var setupClose = userDialog.querySelector('.setup-close');
 var ESC_KEYCODE = 27;
 var ENTER_KEYCODE = 13;
+
+var coordsX = document.querySelector('body').offsetWidth / 2; ////////////////////////////////////
+var coordsY = 80;
+
+var resetCoords = function () {
+  userDialog.style.top = coordsY + 'px';
+  userDialog.style.left = coordsX + 'px';
+};///////////////////////////
 // функция обработки события закрытия по esc
 var popupEscPressHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -78,6 +86,7 @@ var closePopup = function () {
   userDialog.classList.add('hidden');
   document.removeEventListener('keydown', popupEscPressHandler); // при закрытом окне слушать закрытие не нужно, удаляю
   setupClose.removeEventListener('keydown', popupEnterPressHandler);
+  resetCoords();
 };
 
 
@@ -116,20 +125,76 @@ var eyesPlayerInp = document.querySelector('.setup-player input[name=eyes-color]
 var fireballPlayerInp = document.querySelector('input[name=fireball-color]');
 var fireball = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
+// меняет цвет мантии по клику
 coatPlayer.addEventListener('click', function () {
   var RandColor = getRandomItem(wizardsCoat);
   coatPlayer.style.fill = RandColor;
   coatPlayerInp.value = RandColor;
 });
 
+// меняет цвет глаз по клику
 eyesPlayer.addEventListener('click', function () {
   var RandColor = getRandomItem(wizardsEyes);
   eyesPlayer.style.fill = RandColor;
   eyesPlayerInp.value = RandColor;
 });
 
+// меняет цвет шара по клику
 fireballPlayer.addEventListener('click', function () {
   var RandColor = getRandomItem(fireball);
   fireballPlayer.style.background = RandColor;
   fireballPlayerInp.value = RandColor;
 });
+
+var dialogHandler = userDialog.querySelector('.upload');
+///////////////////////////////////////////
+
+// перетаскивание
+dialogHandler.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+  var dragged = false;
+
+  var mouseMoveHandler = function (moveEvt) {
+    moveEvt.preventDefault();
+    dragged = true;
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
+    userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
+
+  };
+
+  var mouseUpHandler = function (upEvt) {
+    upEvt.preventDefault();
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseUp', mouseUpHandler);
+
+    if (dragged) {
+      var clickPreventDefaultHandler = function (defEvt) {
+        defEvt.preventDefault();
+        dialogHandler.removeEventListener('click', clickPreventDefaultHandler);
+      };
+      dialogHandler.addEventListener('click', clickPreventDefaultHandler);
+    }
+  };
+
+  document.addEventListener('mousemove', mouseMoveHandler);
+  document.addEventListener('mouseup', mouseUpHandler);
+});
+
+var artifact = document.querySelector('.setup-artifacts-cell');
+console.log(artifact);
