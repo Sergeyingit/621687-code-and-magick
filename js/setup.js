@@ -61,7 +61,7 @@ var coordsY = 80;
 var resetCoords = function () {
   userDialog.style.top = coordsY + 'px';
   userDialog.style.left = coordsX + 'px';
-};///////////////////////////
+}; ///////////////////////////
 // функция обработки события закрытия по esc
 var popupEscPressHandler = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
@@ -147,7 +147,7 @@ fireballPlayer.addEventListener('click', function () {
 });
 
 var dialogHandler = userDialog.querySelector('.upload');
-///////////////////////////////////////////
+
 
 // перетаскивание
 dialogHandler.addEventListener('mousedown', function (evt) {
@@ -181,7 +181,7 @@ dialogHandler.addEventListener('mousedown', function (evt) {
   var mouseUpHandler = function (upEvt) {
     upEvt.preventDefault();
     document.removeEventListener('mousemove', mouseMoveHandler);
-    document.removeEventListener('mouseUp', mouseUpHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
 
     if (dragged) {
       var clickPreventDefaultHandler = function (defEvt) {
@@ -197,4 +197,55 @@ dialogHandler.addEventListener('mousedown', function (evt) {
 });
 
 var artifact = document.querySelector('.setup-artifacts-cell');
-console.log(artifact);
+var artifactShop = document.querySelector('.setup-artifacts-shop');
+var artifactsPlayer = document.querySelector('.setup-artifacts');
+var artifacts = artifactsPlayer.querySelectorAll('.setup-artifacts-cell');
+
+// смена ячеек магазина и игрока. прогоняю в цикле, вызываю функцию, которая определяет
+// на какую ячейку перетаскиваю предмет. По событию происходит перемещение предмета
+// из магазина в рюкзак, а ячейка, на место которой переместили ячейку с предметом - переходит
+// на последнюю позицию в магазин
+var changeCell = function () {
+  var replaceElem = function (art) {
+    art.addEventListener('mouseup', function () {
+      var replace = artifactsPlayer.replaceChild(artifact, art);
+      artifactShop.appendChild(replace);
+
+    });
+  };
+  for (var j = 0; j < artifacts.length; j++) {
+    var artifactElem = artifacts[j];
+    replaceElem(artifactElem);
+  }
+};
+artifact.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var mouseMoveHandler = function (moveEvt) {
+    moveEvt.preventDefault();
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    artifact.style.top = (artifact.offsetTop - shift.y) + 'px';
+    artifact.style.left = (artifact.offsetLeft - shift.x) + 'px';
+
+  };
+  var mouseUpHandler = function () {
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+    changeCell();
+  };
+  document.addEventListener('mousemove', mouseMoveHandler);
+  document.addEventListener('mouseup', mouseUpHandler);
+});
