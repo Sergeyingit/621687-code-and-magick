@@ -25,11 +25,11 @@
 
   artifactsElement.addEventListener('dragenter', function (evt) {
     evt.target.style.background = 'yellow';
-    evt.target.appendChild(draggedItem);
+    evt.preventDefault();
   });
 
   artifactsElement.addEventListener('dragleave', function (evt) {
     evt.target.style.background = '';
-    evt.target.appendChild(draggedItem);
+    evt.preventDefault();
   });
 })();
