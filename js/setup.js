@@ -1,286 +1,57 @@
 'use strict';
-var userDialog = document.querySelector('.setup');
-
-
-var similarListElement = document.querySelector('.setup-similar-list');
-var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-
-var wizardsName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-var wizardsLastName = ['да  Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-var wizardsCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-var wizardsEyes = ['black', 'red', 'blue', 'yellow', 'green'];
-var randomInt = function (min, max) {
-  return Math.floor(min + Math.random() * (max - min));
-};
-
-var getRandomItem = function (arr) {
-  return arr[randomInt(0, arr.length)];
-};
-
-var getWizards = function () {
-  var wizards = [];
-  for (var i = 0; i < 4; i++) {
-    wizards.push({
-      name: getRandomItem(wizardsName) + ' ' + getRandomItem(wizardsLastName),
-      coatColor: getRandomItem(wizardsCoat),
-      eyesColor: getRandomItem(wizardsEyes)
-    });
-  }
-  return wizards;
-};
-
-var renderWizard = function (wizard) {
-  var wizardElement = similarWizardTemplate.cloneNode(true);
-  wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-  wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-  wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
-  return wizardElement;
-};
-
-var allWizards = getWizards();
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < allWizards.length; i++) {
-  fragment.appendChild(renderWizard(allWizards[i]));
-}
-
-similarListElement.appendChild(fragment);
-
-
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
-
-// события
-// нахожу объекты, с которыми буду работать .setup (userDialog) & .setup-open
-var setupOpen = document.querySelector('.setup-open');
-var setupClose = userDialog.querySelector('.setup-close');
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
-
-var coordsX = document.querySelector('body').offsetWidth / 2; ////////////////////////////////////
-var coordsY = 80;
-
-var resetCoords = function () {
-  userDialog.style.top = coordsY + 'px';
-  userDialog.style.left = coordsX + 'px';
-}; ///////////////////////////
-// функция обработки события закрытия по esc
-var popupEscPressHandler = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closePopup();
-  }
-};
-// функция обработки события закрытия по enter
-var popupEnterPressHandler = function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    closePopup();
-  }
-};
-
-// добавляю функции открытия-закрытия
-var openPopup = function () {
-  userDialog.classList.remove('hidden');
-  document.addEventListener('keydown', popupEscPressHandler); // при открытом окне слушаю закрытие по клавишам
-  setupClose.addEventListener('keydown', popupEnterPressHandler);
-};
-
-var closePopup = function () {
-  userDialog.classList.add('hidden');
-  document.removeEventListener('keydown', popupEscPressHandler); // при закрытом окне слушать закрытие не нужно, удаляю
-  setupClose.removeEventListener('keydown', popupEnterPressHandler);
-  resetCoords();
-};
-
-
-// добавляю обработчик события open
-setupOpen.addEventListener('click', function () {
-  openPopup();
-});
-
-setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ENTER_KEYCODE) {
-    openPopup();
-  }
-});
-
-// добавляю обработчик события close
-
-setupClose.addEventListener('click', function () {
-  closePopup();
-});
-
-var userName = document.querySelector('.setup-user-name');
-userName.addEventListener('focus', function () {
-  document.removeEventListener('keydown', popupEscPressHandler);
-});
-
-userName.addEventListener('blur', function () {
-  document.addEventListener('keydown', popupEscPressHandler);
-});
-
-var setupPlayer = document.querySelector('.setup-wizard');
-var coatPlayer = setupPlayer.querySelector('.wizard-coat');
-var eyesPlayer = setupPlayer.querySelector('.wizard-eyes');
-var fireballPlayer = document.querySelector('.setup-fireball-wrap');
-var coatPlayerInp = document.querySelector('.setup-player input[name=coat-color]');
-var eyesPlayerInp = document.querySelector('.setup-player input[name=eyes-color]');
-var fireballPlayerInp = document.querySelector('input[name=fireball-color]');
-var fireball = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
-
-// меняет цвет мантии по клику
-coatPlayer.addEventListener('click', function () {
-  var RandColor = getRandomItem(wizardsCoat);
-  coatPlayer.style.fill = RandColor;
-  coatPlayerInp.value = RandColor;
-});
-
-// меняет цвет глаз по клику
-eyesPlayer.addEventListener('click', function () {
-  var RandColor = getRandomItem(wizardsEyes);
-  eyesPlayer.style.fill = RandColor;
-  eyesPlayerInp.value = RandColor;
-});
-
-// меняет цвет шара по клику
-fireballPlayer.addEventListener('click', function () {
-  var RandColor = getRandomItem(fireball);
-  fireballPlayer.style.background = RandColor;
-  fireballPlayerInp.value = RandColor;
-});
-
-var dialogHandler = userDialog.querySelector('.upload');
-
-
-// перетаскивание
-dialogHandler.addEventListener('mousedown', function (evt) {
-  evt.preventDefault();
-
-  var startCoords = {
-    x: evt.clientX,
-    y: evt.clientY
-  };
-  var dragged = false;
-
-  var mouseMoveHandler = function (moveEvt) {
-    moveEvt.preventDefault();
-    dragged = true;
-
-    var shift = {
-      x: startCoords.x - moveEvt.clientX,
-      y: startCoords.y - moveEvt.clientY
-    };
-
-    startCoords = {
-      x: moveEvt.clientX,
-      y: moveEvt.clientY
-    };
-
-    userDialog.style.top = (userDialog.offsetTop - shift.y) + 'px';
-    userDialog.style.left = (userDialog.offsetLeft - shift.x) + 'px';
-
+(function () {
+  var userDialog = document.querySelector('.setup');
+  var similarListElement = document.querySelector('.setup-similar-list');
+  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+  var wizardsName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
+  var wizardsLastName = ['да  Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
+  var wizardsCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var wizardsEyes = ['black', 'red', 'blue', 'yellow', 'green'];
+  var randomInt = function (min, max) {
+    return Math.floor(min + Math.random() * (max - min));
   };
 
-  var mouseUpHandler = function (upEvt) {
-    upEvt.preventDefault();
-    document.removeEventListener('mousemove', mouseMoveHandler);
-    document.removeEventListener('mouseup', mouseUpHandler);
+  var getRandomItem = function (arr) {
+    return arr[randomInt(0, arr.length)];
+  };
 
-    if (dragged) {
-      var clickPreventDefaultHandler = function (defEvt) {
-        defEvt.preventDefault();
-        dialogHandler.removeEventListener('click', clickPreventDefaultHandler);
-      };
-      dialogHandler.addEventListener('click', clickPreventDefaultHandler);
+  var getWizards = function () {
+    var wizards = [];
+    for (var i = 0; i < 4; i++) {
+      wizards.push({
+        name: getRandomItem(wizardsName) + ' ' + getRandomItem(wizardsLastName),
+        coatColor: getRandomItem(wizardsCoat),
+        eyesColor: getRandomItem(wizardsEyes)
+      });
     }
+    return wizards;
   };
 
-  document.addEventListener('mousemove', mouseMoveHandler);
-  document.addEventListener('mouseup', mouseUpHandler);
-});
-
-var artifact = document.querySelector('.setup-artifacts-cell');
-var artifactShop = document.querySelector('.setup-artifacts-shop');
-var artifactsPlayer = document.querySelector('.setup-artifacts');
-var artifacts = artifactsPlayer.querySelectorAll('.setup-artifacts-cell');
-var star = document.querySelector('.setup-artifacts-cell img');
-
-// смена ячеек магазина и игрока. прогоняю в цикле, вызываю функцию, которая определяет
-// на какую ячейку перетаскиваю предмет. По событию происходит перемещение предмета
-// из магазина в рюкзак, а ячейка, на место которой переместили ячейку с предметом - переходит
-// на последнюю позицию в магазин
-/*var changeCell = function () {
-  var replaceElem = function (art) {
-    art.addEventListener('mouseup', function () {
-      //var replace = artifactsPlayer.replaceChild(artifact, art);
-      //artifactShop.appendChild(replace);
-      artifact.removeChild(star);
-      art.appendChild(star);
-    });
+  var renderWizard = function (wizard) {
+    var wizardElement = similarWizardTemplate.cloneNode(true);
+    wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    return wizardElement;
   };
-  for (var j = 0; j < artifacts.length; j++) {
-    var artifactElem = artifacts[j];
-    replaceElem(artifactElem);
+
+  var allWizards = getWizards();
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < allWizards.length; i++) {
+    fragment.appendChild(renderWizard(allWizards[i]));
   }
-};
-star.addEventListener('mousedown', function (evt) {
-  evt.preventDefault();
-  var startCoords = {
-    x: evt.clientX,
-    y: evt.clientY
+
+  similarListElement.appendChild(fragment);
+
+
+  userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+  window.setup = {
+    getRandomItem: getRandomItem,
+    wizardsCoat: wizardsCoat,
+    wizardsEyes: wizardsEyes,
+    userDialog: userDialog
   };
+})();
 
-  var mouseMoveHandler = function (moveEvt) {
-    moveEvt.preventDefault();
-    var shift = {
-      x: startCoords.x - moveEvt.clientX,
-      y: startCoords.y - moveEvt.clientY
-    };
 
-    startCoords = {
-      x: moveEvt.clientX,
-      y: moveEvt.clientY
-    };
-
-    star.style.top = (star.offsetTop - shift.y) + 'px';
-    star.style.left = (star.offsetLeft - shift.x) + 'px';
-
-  };
-  var mouseUpHandler = function () {
-    document.removeEventListener('mousemove', mouseMoveHandler);
-    document.removeEventListener('mouseup', mouseUpHandler);
-    changeCell();
-  };
-  document.addEventListener('mousemove', mouseMoveHandler);
-  document.addEventListener('mouseup', mouseUpHandler);
-});
-*/
-
-var shopElement = document.querySelector('.setup-artifacts-shop');
-var draggedItem = null;
-
-shopElement.addEventListener('dragstart', function (evt) {
-  if (evt.target.tagName.toLowerCase() === 'img') {
-    draggedItem = evt.target;
-    evt.dataTransfer.setData('text/plain', evt.target.alt);
-  }
-});
-
-var artifactsElement = document.querySelector('.setup-artifacts');
-artifactsElement.addEventListener('dragover', function (evt) {
-  evt.preventDefault();
-  return false;
-});
-
-artifactsElement.addEventListener('drop', function (evt) {
-  evt.preventDefault();
-  evt.target.style.background = '';
-  evt.target.appendChild(draggedItem);
-});
-
-artifactsElement.addEventListener('dragenter', function (evt) {
-  evt.target.style.background = 'yellow';
-  evt.target.appendChild(draggedItem);
-});
-
-artifactsElement.addEventListener('dragleave', function (evt) {
-  evt.target.style.background = '';
-  evt.target.appendChild(draggedItem);
-});
