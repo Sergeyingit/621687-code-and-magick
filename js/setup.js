@@ -200,17 +200,19 @@ var artifact = document.querySelector('.setup-artifacts-cell');
 var artifactShop = document.querySelector('.setup-artifacts-shop');
 var artifactsPlayer = document.querySelector('.setup-artifacts');
 var artifacts = artifactsPlayer.querySelectorAll('.setup-artifacts-cell');
+var star = document.querySelector('.setup-artifacts-cell img');
 
 // смена ячеек магазина и игрока. прогоняю в цикле, вызываю функцию, которая определяет
 // на какую ячейку перетаскиваю предмет. По событию происходит перемещение предмета
 // из магазина в рюкзак, а ячейка, на место которой переместили ячейку с предметом - переходит
 // на последнюю позицию в магазин
-var changeCell = function () {
+/*var changeCell = function () {
   var replaceElem = function (art) {
     art.addEventListener('mouseup', function () {
-      var replace = artifactsPlayer.replaceChild(artifact, art);
-      artifactShop.appendChild(replace);
-
+      //var replace = artifactsPlayer.replaceChild(artifact, art);
+      //artifactShop.appendChild(replace);
+      artifact.removeChild(star);
+      art.appendChild(star);
     });
   };
   for (var j = 0; j < artifacts.length; j++) {
@@ -218,7 +220,7 @@ var changeCell = function () {
     replaceElem(artifactElem);
   }
 };
-artifact.addEventListener('mousedown', function (evt) {
+star.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
   var startCoords = {
     x: evt.clientX,
@@ -237,8 +239,8 @@ artifact.addEventListener('mousedown', function (evt) {
       y: moveEvt.clientY
     };
 
-    artifact.style.top = (artifact.offsetTop - shift.y) + 'px';
-    artifact.style.left = (artifact.offsetLeft - shift.x) + 'px';
+    star.style.top = (star.offsetTop - shift.y) + 'px';
+    star.style.left = (star.offsetLeft - shift.x) + 'px';
 
   };
   var mouseUpHandler = function () {
@@ -248,4 +250,37 @@ artifact.addEventListener('mousedown', function (evt) {
   };
   document.addEventListener('mousemove', mouseMoveHandler);
   document.addEventListener('mouseup', mouseUpHandler);
+});
+*/
+
+var shopElement = document.querySelector('.setup-artifacts-shop');
+var draggedItem = null;
+
+shopElement.addEventListener('dragstart', function (evt) {
+  if (evt.target.tagName.toLowerCase() === 'img') {
+    draggedItem = evt.target;
+    evt.dataTransfer.setData('text/plain', evt.target.alt);
+  }
+});
+
+var artifactsElement = document.querySelector('.setup-artifacts');
+artifactsElement.addEventListener('dragover', function (evt) {
+  evt.preventDefault();
+  return false;
+});
+
+artifactsElement.addEventListener('drop', function (evt) {
+  evt.preventDefault();
+  evt.target.style.background = '';
+  evt.target.appendChild(draggedItem);
+});
+
+artifactsElement.addEventListener('dragenter', function (evt) {
+  evt.target.style.background = 'yellow';
+  evt.target.appendChild(draggedItem);
+});
+
+artifactsElement.addEventListener('dragleave', function (evt) {
+  evt.target.style.background = '';
+  evt.target.appendChild(draggedItem);
 });
