@@ -1,14 +1,15 @@
 'use strict';
 (function () {
-  var URL = 'https://js.dump.academy/code-and-magick';
-  var URL_DATA = 'https://js.dump.academy/code-and-magick/data';
+  var URL = 'https://js.dump.academy/code-and-magick/';
+  var statusOk = 200;
+  var timeOut = 10000;
 
   var load = function (loadHandler, errorHandler) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === statusOk) {
         loadHandler(xhr.response);
       } else {
         errorHandler('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -22,9 +23,9 @@
       errorHandler('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = timeOut;
 
-    xhr.open('GET', URL_DATA);
+    xhr.open('GET', URL + 'data');
     xhr.send();
   };
 

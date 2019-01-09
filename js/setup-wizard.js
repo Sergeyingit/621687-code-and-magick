@@ -15,6 +15,7 @@
     var RandColor = window.setup.getRandomItem(window.setup.wizardsCoat);
     coatPlayer.style.fill = RandColor;
     coatPlayerInp.value = RandColor;
+
   });
 
   // меняет цвет глаз по клику

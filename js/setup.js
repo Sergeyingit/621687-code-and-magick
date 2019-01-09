@@ -3,10 +3,22 @@
   var userDialog = document.querySelector('.setup');
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-  // var wizardsName = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  // var wizardsLastName = ['да  Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var wizardsCoat = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var wizardsEyes = ['black', 'red', 'blue', 'yellow', 'green'];
+  var wizardsCoat = [
+    'rgb(101, 137, 164)',
+    'rgb(241, 43, 107)',
+    'rgb(146, 100, 161)',
+    'rgb(56, 159, 117)',
+    'rgb(215, 210, 55)',
+    'rgb(0, 0, 0)'
+  ];
+  var wizardsEyes = [
+    'black',
+    'red',
+    'blue',
+    'yellow',
+    'green'
+  ];
+
   var randomInt = function (min, max) {
     return Math.floor(min + Math.random() * (max - min));
   };
@@ -15,18 +27,6 @@
     return arr[randomInt(0, arr.length)];
   };
 
-  /* var getWizards = function () {
-    var wizards = [];
-    for (var i = 0; i < 4; i++) {
-      wizards.push({
-        name: getRandomItem(wizardsName) + ' ' + getRandomItem(wizardsLastName),
-        coatColor: getRandomItem(wizardsCoat),
-        eyesColor: getRandomItem(wizardsEyes)
-      });
-    }
-    return wizards;
-  };*/
-
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -34,8 +34,6 @@
     wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
     return wizardElement;
   };
-
-  // var allWizards = getWizards();
 
   var loadHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
@@ -61,13 +59,13 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.backend.load(loadHandler, errorHandler);
-
   window.setup = {
     getRandomItem: getRandomItem,
     wizardsCoat: wizardsCoat,
     wizardsEyes: wizardsEyes,
-    userDialog: userDialog
+    userDialog: userDialog,
+    loadHandler: loadHandler,
+    errorHandler: errorHandler
   };
 })();
 
