@@ -30,4 +30,18 @@
     fireballPlayer.style.background = RandColor;
     fireballPlayerInp.value = RandColor;
   });
+
+  var onLoad = function (response) {
+    userDialog.classList.add('hidden');
+  };
+
+  var onError = function () {
+
+  };
+
+  var form = window.setup.userDialog.querySelector('.setup-wizard-form');
+    form.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      window.backend.save(new FormData(form), onLoad, onError);
+    });
 })();
