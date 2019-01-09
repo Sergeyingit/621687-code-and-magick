@@ -59,13 +59,19 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
+  var request = function () {
+    var similarItemElement = similarListElement.querySelector('.setup-similar-item');
+    if (!similarItemElement) {
+      window.backend.load(loadHandler, errorHandler);
+    }
+  };
+
   window.setup = {
     getRandomItem: getRandomItem,
     wizardsCoat: wizardsCoat,
     wizardsEyes: wizardsEyes,
     userDialog: userDialog,
-    loadHandler: loadHandler,
-    errorHandler: errorHandler
+    request: request
   };
 })();
 
