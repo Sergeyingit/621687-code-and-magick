@@ -31,7 +31,7 @@
     fireballPlayerInp.value = RandColor;
   });
 
-  var loadHandler = function (response) {
+  var loadHandler = function () {
     window.setup.userDialog.classList.add('hidden');
   };
 
@@ -48,8 +48,8 @@
   };
 
   var form = window.setup.userDialog.querySelector('.setup-wizard-form');
-    form.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-      window.backend.save(new FormData(form), loadHandler, errorHandler);
-    });
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), loadHandler, errorHandler);
+  });
 })();

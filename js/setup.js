@@ -15,7 +15,7 @@
     return arr[randomInt(0, arr.length)];
   };
 
-  var getWizards = function () {
+  /* var getWizards = function () {
     var wizards = [];
     for (var i = 0; i < 4; i++) {
       wizards.push({
@@ -25,7 +25,7 @@
       });
     }
     return wizards;
-  };
+  };*/
 
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -35,7 +35,7 @@
     return wizardElement;
   };
 
-  //var allWizards = getWizards();
+  // var allWizards = getWizards();
 
   var loadHandler = function (wizards) {
     var fragment = document.createDocumentFragment();

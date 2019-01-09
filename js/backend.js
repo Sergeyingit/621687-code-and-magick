@@ -39,9 +39,9 @@
       }
     });
 
-      xhr.addEventListener('error', function () {
-        errorHandler('Произошла ошибка соединения');
-      });
+    xhr.addEventListener('error', function () {
+      errorHandler('Произошла ошибка соединения');
+    });
 
     xhr.open('POST', URL);
     xhr.send(data);
@@ -50,5 +50,5 @@
   window.backend = {
     load: load,
     save: save
-  }
+  };
 })();
