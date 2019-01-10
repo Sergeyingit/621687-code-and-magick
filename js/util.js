@@ -11,9 +11,9 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
 
-    setTimeout(function() {
+    setTimeout(function () {
       if (node) {
-      document.body.removeChild(node);
+        document.body.removeChild(node);
       }
     }, 5000);
 
