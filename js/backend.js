@@ -34,7 +34,7 @@
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
       if (xhr.status === STATUS_OK) {
-        loadHandler(xhr.response);
+        loadHandler();
       } else {
         errorHandler('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
