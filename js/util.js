@@ -14,5 +14,5 @@
 
   window.util = {
     errorHandler: errorHandler
-  }
+  };
 })();
