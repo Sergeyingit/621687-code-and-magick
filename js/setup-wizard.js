@@ -15,6 +15,7 @@
     var RandColor = window.setup.getRandomItem(window.setup.wizardsCoat);
     coatPlayer.style.fill = RandColor;
     coatPlayerInp.value = RandColor;
+
   });
 
   // меняет цвет глаз по клику
@@ -29,5 +30,16 @@
     var RandColor = window.setup.getRandomItem(fireball);
     fireballPlayer.style.background = RandColor;
     fireballPlayerInp.value = RandColor;
+  });
+
+  var loadHandler = function () {
+    window.setup.userDialog.classList.add('hidden');
+  };
+
+
+  var form = window.setup.userDialog.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), loadHandler, window.util.errorHandler);
   });
 })();

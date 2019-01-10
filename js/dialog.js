@@ -34,6 +34,7 @@
     window.setup.userDialog.classList.remove('hidden');
     document.addEventListener('keydown', popupEscPressHandler); // при открытом окне слушаю закрытие по клавишам
     setupClose.addEventListener('keydown', popupEnterPressHandler);
+    window.setup.request();
   };
 
   var closePopup = function () {
