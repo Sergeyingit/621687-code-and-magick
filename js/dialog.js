@@ -1,6 +1,5 @@
 'use strict';
 
-
 (function () {
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = window.setup.userDialog.querySelector('.setup-close');
@@ -34,7 +33,7 @@
     window.setup.userDialog.classList.remove('hidden');
     document.addEventListener('keydown', popupEscPressHandler); // при открытом окне слушаю закрытие по клавишам
     setupClose.addEventListener('keydown', popupEnterPressHandler);
-    window.setup.request();
+    window.util.request();
   };
 
   var closePopup = function () {
