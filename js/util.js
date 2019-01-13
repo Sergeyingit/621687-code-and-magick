@@ -1,5 +1,9 @@
 'use strict';
 (function () {
+  var loadHandler = function (wizards) {
+    window.render.render(wizards);
+  };
+
   var errorHandler = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
@@ -19,7 +23,13 @@
 
   };
 
+  var request = function () {
+      window.backend.load(loadHandler, errorHandler);
+  };
+
   window.util = {
-    errorHandler: errorHandler
+    loadHandler: loadHandler,
+    errorHandler: errorHandler,
+    request: request
   };
 })();
