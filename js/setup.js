@@ -27,7 +27,7 @@
     return arr[randomInt(0, arr.length)];
   };
 
-  var renderWizard = function (wizard) {
+  /*var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
     wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
@@ -46,21 +46,20 @@
 
     userDialog.querySelector('.setup-similar').classList.remove('hidden');
   };
+*/
 
-
-  var request = function () {
+  /*var request = function () {
     var similarItemElement = similarListElement.querySelector('.setup-similar-item');
     if (!similarItemElement) {
-      window.backend.load(loadHandler, window.util.errorHandler);
+      window.backend.load(window.render.loadHandler, window.util.errorHandler);
     }
-  };
+  };*/
 
   window.setup = {
     getRandomItem: getRandomItem,
     wizardsCoat: wizardsCoat,
     wizardsEyes: wizardsEyes,
     userDialog: userDialog,
-    request: request
   };
 })();
 
