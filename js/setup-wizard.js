@@ -15,7 +15,7 @@
     var RandColor = window.setup.getRandomItem(window.setup.wizardsCoat);
     coatPlayer.style.fill = RandColor;
     coatPlayerInp.value = RandColor;
-    window.util.coatChangeHandler(RandColor);
+    window.filter.coatChangeHandler(RandColor);
 
   });
 
@@ -24,7 +24,7 @@
     var RandColor = window.setup.getRandomItem(window.setup.wizardsEyes);
     eyesPlayer.style.fill = RandColor;
     eyesPlayerInp.value = RandColor;
-    window.util.eyesChangeHandler(RandColor);
+    window.filter.eyesChangeHandler(RandColor);
   });
 
   // меняет цвет шара по клику

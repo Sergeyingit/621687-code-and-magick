@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  /*var COAT = 'rgb(101, 137, 164)';
+  var COAT = 'rgb(101, 137, 164)';
   var EYES = 'black';
   var coatColor = COAT;
   var eyesColor = EYES;
@@ -48,40 +48,12 @@
   var coatChangeHandler = window.debounce.debounce(function (color) {
     coatColor = color;
     updateWizards();
-  });*/
+  });
 
-  var loadHandler = function (data) {
-    window.filter.wizards = data;
-    window.filter.updateWizards();
-  };
-
-  var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-
-    setTimeout(function () {
-      if (node) {
-        document.body.removeChild(node);
-      }
-    }, 5000);
-
-  };
-
-  var request = function () {
-    window.backend.load(loadHandler, errorHandler);
-  };
-
-  window.util = {
-    loadHandler: loadHandler,
-    errorHandler: errorHandler,
-    request: request,
+  window.filter = {
+    eyesChangeHandler: eyesChangeHandler,
+    coatChangeHandler: coatChangeHandler,
+    wizards: wizards,
+    updateWizards: updateWizards
   };
 })();
-

@@ -8,16 +8,13 @@
 
     return function () {
       var parameters = arguments;
-
       if (lastTimeoute) {
         window.clearTimeout(lastTimeoute);
       }
-
       lastTimeoute = window.setTimeout(function () {
         cb.apply(null, parameters);
       }, DEBOUNCE_INTERVAL);
     };
-
   };
 
   window.debounce = {
