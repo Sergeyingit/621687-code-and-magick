@@ -10,7 +10,7 @@
   var fireballPlayerInp = document.querySelector('input[name=fireball-color]');
   var fireball = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
- // меняет цвет мантии по клику
+  // меняет цвет мантии по клику
   coatPlayer.addEventListener('click', function () {
     var RandColor = window.setup.getRandomItem(window.setup.wizardsCoat);
     coatPlayer.style.fill = RandColor;

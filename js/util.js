@@ -73,7 +73,7 @@
   };
 
   var request = function () {
-      window.backend.load(loadHandler, errorHandler);
+    window.backend.load(loadHandler, errorHandler);
   };
 
   window.util = {
