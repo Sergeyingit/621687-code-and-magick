@@ -38,32 +38,15 @@
   };
 
 
-  var onEyesChange = function (color) {
+  var eyesChangeHandler = window.debounce.debounce(function (color) {
     eyesColor = color;
     updateWizards();
-  };
-
-  var onCoatChange = function (color) {
-    coatColor = color;
-    updateWizards();
-  };
-
-  /*// меняет цвет мантии по клику
-  coatPlayer.addEventListener('click', function () {
-    var RandColor = window.setup.getRandomItem(window.setup.wizardsCoat);
-    coatPlayer.style.fill = RandColor;
-    coatColor = RandColor;
-    updateWizards();
-
   });
 
-  // меняет цвет глаз по клику
-  eyesPlayer.addEventListener('click', function () {
-    var RandColor = window.setup.getRandomItem(window.setup.wizardsEyes);
-    eyesPlayer.style.fill = RandColor;
-    eyesColor = RandColor;
+  var coatChangeHandler = window.debounce.debounce(function (color) {
+    coatColor = color;
     updateWizards();
-  });*/
+  });
 
   var loadHandler = function (data) {
     wizards = data;
@@ -97,8 +80,8 @@
     loadHandler: loadHandler,
     errorHandler: errorHandler,
     request: request,
-    onEyesChange: onEyesChange,
-    onCoatChange: onCoatChange
+    eyesChangeHandler: eyesChangeHandler,
+    coatChangeHandler: coatChangeHandler
   };
 })();
 
