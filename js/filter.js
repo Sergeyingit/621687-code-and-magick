@@ -4,7 +4,6 @@
   var EYES = 'black';
   var coatColor = COAT;
   var eyesColor = EYES;
-  var wizards = [];
 
   var getRank = function (wizard) {
     var rank = 0;
@@ -29,8 +28,8 @@
     }
   };
 
-  var updateWizards = function () {
-    window.render.render(wizards.sort(function (left, right) {
+  var updateWizards = function (loadList) {
+    window.render.render(loadList.sort(function (left, right) {
       var rankDiff = getRank(right) - getRank(left);
       if (rankDiff === 0) {
         rankDiff = namesComparator(left.name, right.name);
@@ -42,18 +41,17 @@
 
   var eyesChangeHandler = window.debounce.debounce(function (color) {
     eyesColor = color;
-    updateWizards();
+    updateWizards(window.wizards.loadList);
   });
 
   var coatChangeHandler = window.debounce.debounce(function (color) {
     coatColor = color;
-    updateWizards();
+    updateWizards(window.wizards.loadList);
   });
 
   window.filter = {
     eyesChangeHandler: eyesChangeHandler,
     coatChangeHandler: coatChangeHandler,
-    wizards: wizards,
     updateWizards: updateWizards
   };
 })();
